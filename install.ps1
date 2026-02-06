@@ -3,15 +3,15 @@
 $ErrorActionPreference = "Stop"
 
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-	$ScriptUrl = "https://github.com/HackberryA3/Netdog/releases/latest/download/install.ps1"
+	$ScriptUrl = "https://github.com/HackberryA3/app-netdog/releases/latest/download/install.ps1"
 	Start-Process powershell -ArgumentList "Invoke-WebRequest -Uri $ScriptUrl | Invoke-Expression" -Verb RunAs -Wait -WindowStyle Hidden
 	return
 }
 
 # ダウンロードするURL
-$UrlNetdog = "https://github.com/HackberryA3/Netdog/releases/latest/download/Netdog.exe"
-$UrlNc = "https://github.com/HackberryA3/Netdog/releases/latest/download/nc.exe"
-$UrlUninstaller = "https://github.com/HackberryA3/Netdog/releases/latest/download/uninstall.ps1"
+$UrlNetdog = "https://github.com/HackberryA3/app-netdog/releases/latest/download/Netdog.exe"
+$UrlNc = "https://github.com/HackberryA3/app-netdog/releases/latest/download/nc.exe"
+$UrlUninstaller = "https://github.com/HackberryA3/app-netdog/releases/latest/download/uninstall.ps1"
 
 # ダウンロード先のファイルパス
 $InstallPath = "C:\Program Files\Netdog"
@@ -39,7 +39,7 @@ if (-not ($ExistingPath -split ";" -contains $InstallPath)) {
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
 
 # レジストリ
-$Repo = "HackberryA3/Netdog"
+$Repo = "HackberryA3/app-netdog"
 
 $ApiUrl = "https://api.github.com/repos/$Repo/releases/latest"
 $Response = Invoke-RestMethod -Uri $ApiUrl
@@ -69,3 +69,4 @@ Set-ItemProperty -Path $UninstallKey -Name "InstallLocation" -Value $InstallPath
 Set-ItemProperty -Path $UninstallKey -Name "DisplayIcon" -Value $IconPath
 Set-ItemProperty -Path $UninstallKey -Name "NoModify" -Value 1
 Set-ItemProperty -Path $UninstallKey -Name "NoRepair" -Value 1
+
